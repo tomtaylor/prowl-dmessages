@@ -1,9 +1,14 @@
 #!/usr/bin/env ruby
-
-require 'rubygems'
-require 'activesupport'
-require 'twitter'
-require 'httparty'
+begin
+  require 'rubygems'
+  require 'activesupport'
+  require 'twitter'
+  require 'httparty'
+rescue LoadError, MissingSourceFile
+  puts "This script requires the following gems: activesupport, twitter, httparty."
+  puts "  sudo gem install activesupport twitter httparty"
+  exit 1
+end
 
 class Prowl
   include HTTParty
