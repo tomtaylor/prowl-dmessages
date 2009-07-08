@@ -1,0 +1,7 @@
+prowl:
+  username: user
+  password: pass
+  
+twitter:
+  username: user
+  password: pass
