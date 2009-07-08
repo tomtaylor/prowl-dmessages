@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby -KU
+#!/usr/bin/env ruby
 
 require 'rubygems'
 require 'activesupport'
@@ -48,12 +48,12 @@ if direct_messages.any?
     puts "Sending: #{text}"
   
     begin
-      # response = prowl.add_notification(:application => 'Twitter', :event => 'd msg', :description => text)
-      # if response.code == 200
+      response = prowl.add_notification(:application => 'Twitter', :event => 'd msg', :description => text)
+      if response.code == 200
         most_recent_id = message.id if message.id > most_recent_id
-      # else
-        # raise
-      # end
+      else
+        raise "Bad response from Prowl: #{response.body}"
+      end
     rescue Exception => e
       puts "Something failed, breaking for this run: #{e}"
       break
