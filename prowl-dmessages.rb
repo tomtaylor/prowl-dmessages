@@ -7,7 +7,8 @@ require 'httparty'
 
 class Prowl
   include HTTParty
-  base_uri 'https://prowl.weks.net/api'
+  base_uri 'https://prowl.weks.net/publicapi'
+  format :xml
   
   def initialize(username, password)
     @auth = { :username => username, :password => password }
@@ -52,7 +53,7 @@ if direct_messages.any?
       if response.code == 200
         most_recent_id = message.id if message.id > most_recent_id
       else
-        raise "Bad response from Prowl: #{response.body}"
+        raise "Bad response from Prowl: #{response['prowl']['error']}"
       end
     rescue Exception => e
       puts "Something failed, breaking for this run: #{e}"
