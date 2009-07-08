@@ -1,6 +1,5 @@
 prowl:
-  username: user
-  password: pass
+  api_key: yourkey
   
 twitter:
   username: user
