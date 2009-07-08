@@ -10,14 +10,17 @@ class Prowl
   base_uri 'https://prowl.weks.net/publicapi'
   format :xml
   
-  def initialize(username, password)
-    @auth = { :username => username, :password => password }
+  def initialize(api_key)
+    @api_key = api_key
   end
   
   def add_notification(options = {})
-    self.class.get("/add_notification.php?application=#{URI.encode(options[:application])}&event=#{URI.encode(options[:event])}&description=#{URI.encode(options[:description])}", :basic_auth => @auth)
+    self.class.get("/add?application=#{URI.encode(options[:application])}&event=#{URI.encode(options[:event])}&description=#{URI.encode(options[:description])}&apikey=#{@api_key}")
   end
   
+  def verify_api_key
+    self.class.get("/verify?apikey=#{@api_key}")
+  end
 end
 
 current_dir = File.dirname(__FILE__)
@@ -40,7 +43,12 @@ direct_messages = base.direct_messages(:since_id => last_seen_id)
 # IDs are sequential, so we want to iterate up through them, so if it ever fails we can resume where we left off
 direct_messages = direct_messages.sort_by { |m| Time.parse(m.created_at) }
 
-prowl = Prowl.new(config["prowl"]["username"], config["prowl"]["password"])
+prowl = Prowl.new(config["prowl"]["api_key"])
+response = prowl.verify_api_key
+if response && response.code > 200
+  puts "API key is invalid, did you copy it correctly?"
+  exit 1
+end  
 
 if direct_messages.any?
   most_recent_id = 0
