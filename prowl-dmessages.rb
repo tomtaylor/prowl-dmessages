@@ -21,8 +21,11 @@ if (File.exist?(last_seen_file_path))
 end
 @last_seen_id ||= 0
 
-httpauth = Twitter::HTTPAuth.new(config["twitter"]["username"], config["twitter"]["password"])
-base = Twitter::Base.new(httpauth)
+# RIP httpauth - use twurl to get the access token/secret
+t = config["twitter"]
+oauth = Twitter::OAuth.new(t["consumer_token"], t["consumer_secret"])
+oauth.authorize_from_access(t["access_token"], t["access_secret"])
+base = Twitter::Base.new(oauth)
 
 # IDs are sequential, so we want to iterate up through them, so if it ever fails we can resume where we left off
 direct_messages = base.direct_messages(:since_id => @last_seen_id).sort_by { |m| Time.parse(m.created_at) }
