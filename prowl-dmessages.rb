@@ -4,9 +4,9 @@ begin
   gem "twitter"
   require 'twitter'
   require "prowl"
-rescue LoadError, MissingSourceFile
-  puts "This script requires the following gems: activesupport, twitter, httparty, prowl."
-  puts "  sudo gem install activesupport twitter httparty prowl"
+rescue LoadError
+  puts "This script requires the following gems: twitter, prowl."
+  puts "  sudo gem install twitter prowl"
   exit 1
 end
 
