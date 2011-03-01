@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 begin
   require 'rubygems'
-  gem "twitter"
+  require "bundler/setup"
   require 'twitter'
   require "prowl"
 rescue LoadError
