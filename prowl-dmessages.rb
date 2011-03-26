@@ -1,12 +1,11 @@
 #!/usr/bin/env ruby
-begin
-  require 'rubygems'
+begin 
+  require "rubygems"
   require "bundler/setup"
-  require 'twitter'
+  require "twitter"
   require "prowl"
 rescue LoadError
-  puts "This script requires the following gems: twitter, prowl."
-  puts "  sudo gem install twitter prowl"
+  puts "This script requires rubygems & bundler installed."
   exit 1
 end
 
