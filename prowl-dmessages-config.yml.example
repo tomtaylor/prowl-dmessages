@@ -2,5 +2,7 @@ prowl:
   api_key: yourkey
   
 twitter:
-  username: user
-  password: pass
+  consumer_token: abcde
+  consumer_secret: abcde
+  access_token: abcde
+  access_secret: abcde
